@@ -1,14 +1,62 @@
-P_{ov} = 
+P_{ov}1_ia = 
  - 1.0L_{ijab}
-P_{vv} = 
- + 1.0\sum_{i}L_{ib}t_{ai}
- - 0.5\sum_{cij}L_{ijcb}t_{caji}
-P_{oo} = 
- - 1.0\sum_{a}L_{ia}t_{aj}
- + 0.5\sum_{abk}L_{ikab}t_{bajk}
-P_{vo} = 
- + 1.0t_{ai}
- - 1.0\sum_{bj}L_{jb}t_{baij}
- - 1.0\sum_{bj}L_{jb}t_{aj}t_{bi}
- + 0.5\sum_{bjck}L_{jkbc}t_{ci}t_{bakj}
- + 0.5\sum_{bjck}L_{jkbc}t_{aj}t_{cbik}
+ += -1.0*einsum('ijab->ibja', L)
+P_{ov}2_ia = 
+
+
+P_{vv}1_ab = 
+ + 1.0L_{ib}delta_{ac}
+ - 1.0\sum_{j}t_{aj}L_{jicb}
+ += 1.0*einsum('ib,ac->abic', L, delta)
+ += -1.0*einsum('aj,jicb->abic', t, L)
+P_{vv}2_ab = 
+ - 1.0L_{jicb}delta_{ad}
+ + 1.0L_{jidb}delta_{ac}
+ += -1.0*einsum('jicb,ad->abijcd', L, delta)
+ += 1.0*einsum('jidb,ac->abijcd', L, delta)
+P_{oo}1_ij = 
+ - 1.0L_{ia}delta_{jk}
+ + 1.0\sum_{b}t_{bj}L_{ikab}
+ += -1.0*einsum('ia,jk->ijka', L, delta)
+ += 1.0*einsum('bj,ikab->ijka', t, L)
+P_{oo}2_ij = 
+ - 1.0L_{ikba}delta_{jl}
+ + 1.0L_{ilba}delta_{jk}
+ += -1.0*einsum('ikba,jl->ijklab', L, delta)
+ += 1.0*einsum('ilba,jk->ijklab', L, delta)
+P_{vo}1_ia = 
+ + 1.0delta_{ab}delta_{ij}
+ + 1.0t_{ai}L_{jb}
+ + 1.0\sum_{kc}t_{caik}L_{kjbc}
+ - 1.0\sum_{k}t_{ak}L_{kb}delta_{ij}
+ - 1.0\sum_{c}t_{ci}L_{jc}delta_{ab}
+ + 1.0\sum_{kc}t_{ak}t_{ci}L_{kjbc}
+ - 0.5\sum_{lck}t_{cakl}L_{lkbc}delta_{ij}
+ - 0.5\sum_{dkc}t_{cdik}L_{kjdc}delta_{ab}
+ += 1.0*einsum('ab,ij->aijb', delta, delta)
+ += 1.0*einsum('ai,jb->aijb', t, L)
+ += 1.0*einsum('caik,kjbc->aijb', t, L)
+ += -1.0*einsum('ak,kb,ij->aijb', t, L, delta)
+ += -1.0*einsum('ci,jc,ab->aijb', t, L, delta)
+ += 1.0*einsum('ak,ci,kjbc->aijb', t, t, L)
+ += -0.5*einsum('cakl,lkbc,ij->aijb', t, L, delta)
+ += -0.5*einsum('cdik,kjdc,ab->aijb', t, L, delta)
+P_{vo}2_ia = 
+ + 1.0t_{ai}L_{kjcb}
+ + 1.0L_{jb}delta_{ik}delta_{ac}
+ - 1.0L_{jc}delta_{ik}delta_{ab}
+ - 1.0L_{kb}delta_{ac}delta_{ij}
+ + 1.0L_{kc}delta_{ij}delta_{ab}
+ - 1.0\sum_{l}t_{al}L_{ljcb}delta_{ik}
+ + 1.0\sum_{l}t_{al}L_{lkcb}delta_{ij}
+ + 1.0\sum_{d}t_{di}L_{kjbd}delta_{ac}
+ - 1.0\sum_{d}t_{di}L_{kjcd}delta_{ab}
+ += 1.0*einsum('ai,kjcb->aijkbc', t, L)
+ += 1.0*einsum('jb,ik,ac->aijkbc', L, delta, delta)
+ += -1.0*einsum('jc,ik,ab->aijkbc', L, delta, delta)
+ += -1.0*einsum('kb,ac,ij->aijkbc', L, delta, delta)
+ += 1.0*einsum('kc,ij,ab->aijkbc', L, delta, delta)
+ += -1.0*einsum('al,ljcb,ik->aijkbc', t, L, delta)
+ += 1.0*einsum('al,lkcb,ij->aijkbc', t, L, delta)
+ += 1.0*einsum('di,kjbd,ac->aijkbc', t, L, delta)
+ += -1.0*einsum('di,kjcd,ab->aijkbc', t, L, delta)
