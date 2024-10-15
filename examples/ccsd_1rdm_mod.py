@@ -26,7 +26,7 @@ ket = ketE1("occ", "vir")
 PT = commute(pvo, T)
 PTT = commute(PT, T)
 mid = pvo + PT + Fraction('1/2')*PTT
-full = L*mid
+full = L*mid*ket
 out = apply_wick(full)
 out.resolve()
 final = AExpression(Ex=out)
