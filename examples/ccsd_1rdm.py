@@ -3,7 +3,7 @@ from wick.index import Idx
 from wick.operator import FOperator, Tensor
 from wick.expression import Term, Expression, AExpression
 from wick.wick import apply_wick
-from wick.convenience import E1, E2, commute
+from wick.convenience import E1, E2, commute, ketE1
 
 i = Idx(0, "occ")
 a = Idx(0, "vir")
@@ -21,11 +21,12 @@ L = L1 + L2
 # ov block
 operators = [FOperator(a, True), FOperator(i, False)]
 pvo = Expression([Term(1, [], [Tensor([i, a], "")], operators, [])])
+ket = ketE1("occ", "vir")
 
 PT = commute(pvo, T)
 PTT = commute(PT, T)
 mid = pvo + PT + Fraction('1/2')*PTT
-full = L*mid
+full = L*mid*ket
 out = apply_wick(full)
 out.resolve()
 final = AExpression(Ex=out)
