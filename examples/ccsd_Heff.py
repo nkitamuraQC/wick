@@ -134,6 +134,18 @@ final.transpose((0, 2, 1, 3))
 print("W_{voov} = ")
 print(final)
 
+ket = ketE1("vir", "occ")
+bra = braE1("vir", "occ")
+S = bra*Hbar*ket
+out = apply_wick(S)
+out.resolve()
+final = AExpression(Ex=out)
+final.sort_tensors()
+final = final.get_connected()
+final.transpose((0, 2, 1, 3))
+print("W_{voov}_exp = ")
+print(final)
+
 # vvvo piece
 ket = ketEea1("vir")
 bra = braEea2("occ", "vir", "vir")
