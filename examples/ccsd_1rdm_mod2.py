@@ -35,6 +35,7 @@ full1 = L*mid*R
 out1 = apply_wick(full1)
 out1.resolve()
 final = AExpression(Ex=out1)
+final.sort_tensors()
 print("P_{ov}1_ia = ")
 print(final)
 print(final._print_einsum())
