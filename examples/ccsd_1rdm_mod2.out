@@ -1,0 +1,42 @@
+P_{ov}1_ia = 
+ - 1.0\sum_{aj}L_{ijab}R_{aj}
+ += -1.0*einsum('ijab,aj->ib', L, R)
+P_{vv}1_ab = 
+ + 1.0\sum_{i}L_{ib}R_{ai}
+ - 0.5\sum_{cij}L_{ijcb}R_{caji}
+ - 1.0\sum_{cij}L_{ijcb}t_{ai}R_{cj}
+ += 1.0*einsum('ib,ai->ab', L, R)
+ += -0.5*einsum('ijcb,caji->ab', L, R)
+ += -1.0*einsum('ijcb,ai,cj->ab', L, t, R)
+P_{oo}1_ij = 
+ - 1.0\sum_{a}L_{ia}R_{aj}
+ + 0.5\sum_{abk}L_{ikab}R_{bajk}
+ + 1.0\sum_{abk}L_{ikab}t_{bj}R_{ak}
+ += -1.0*einsum('ia,aj->ij', L, R)
+ += 0.5*einsum('ikab,bajk->ij', L, R)
+ += 1.0*einsum('ikab,bj,ak->ij', L, t, R)
+P_{vo}1_ia = 
+ + 1.0R_{ai}
+ - 1.0\sum_{bj}L_{jb}R_{baij}
+ - 1.0\sum_{bj}L_{jb}t_{bi}R_{aj}
+ - 1.0\sum_{bj}L_{jb}t_{aj}R_{bi}
+ + 1.0\sum_{bj}L_{jb}t_{ai}R_{bj}
+ + 0.5\sum_{bjck}L_{jkbc}t_{ci}R_{bakj}
+ + 0.5\sum_{bjck}L_{jkbc}t_{aj}R_{cbik}
+ + 0.25\sum_{bjck}L_{jkbc}t_{ai}R_{cbkj}
+ - 0.5\sum_{bjck}L_{jkbc}t_{cbij}R_{ak}
+ - 0.5\sum_{bjck}L_{jkbc}t_{cakj}R_{bi}
+ + 1.0\sum_{bjck}L_{jkbc}t_{caij}R_{bk}
+ + 1.0\sum_{bjck}L_{jkbc}t_{aj}t_{ci}R_{bk}
+ += 1.0*einsum('ai->ai', R)
+ += -1.0*einsum('jb,baij->ai', L, R)
+ += -1.0*einsum('jb,bi,aj->ai', L, t, R)
+ += -1.0*einsum('jb,aj,bi->ai', L, t, R)
+ += 1.0*einsum('jb,ai,bj->ai', L, t, R)
+ += 0.5*einsum('jkbc,ci,bakj->ai', L, t, R)
+ += 0.5*einsum('jkbc,aj,cbik->ai', L, t, R)
+ += 0.25*einsum('jkbc,ai,cbkj->ai', L, t, R)
+ += -0.5*einsum('jkbc,cbij,ak->ai', L, t, R)
+ += -0.5*einsum('jkbc,cakj,bi->ai', L, t, R)
+ += 1.0*einsum('jkbc,caij,bk->ai', L, t, R)
+ += 1.0*einsum('jkbc,aj,ci,bk->ai', L, t, t, R)
