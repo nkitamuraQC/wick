@@ -40,12 +40,12 @@ L2_ba = E2("N", ["V", "v"], ["O", "o"])
 #L = L1_a + L1_b + L2_aa + L2_bb + L2_ab
 L = L1_a + L2_aa + L2_ab 
 
-R1_a = E1("r", ["o"], ["v"])
-R1_b = E1("rb", ["O"], ["V"])
-R2_aa = E2("R", ["o", "o"], ["v", "v"])
-R2_bb = E2("rbb", ["O", "O"], ["V", "V"])
-R2_ab = E2("S", ["o", "O"], ["v", "V"])
-R2_ba = E2("rba", ["O", "o"], ["V", "v"])
+R1_a = E1("r", ["oa"], ["va"], index_key=index_key)
+R1_b = E1("rb", ["ob"], ["vb"])
+R2_aa = E2("R", ["oa", "oa"], ["va", "va"], index_key=index_key)
+R2_bb = E2("rbb", ["ob", "ob"], ["vb", "vb"])
+R2_ab = E2("S", ["oa", "ob"], ["va", "vb"], index_key=index_key)
+R2_ba = E2("rba", ["ob", "oa"], ["vb", "va"])
 #R = R1_a + R1_b + R2_aa + R2_bb + R2_ab
 R = R1_a + R2_aa + R2_ab
 
@@ -58,8 +58,8 @@ pvo = Expression([Term(1, [], [Tensor([i, a], "")], operators, [])])
 PT = commute(pvo, T)
 PTT = commute(PT, T)
 mid = pvo + PT + Fraction('1/2')*PTT
-#full = L*mid*R
-full = L*mid
+full = L*mid*R
+#full = L*mid
 out = apply_wick(full)
 out.resolve()
 final = AExpression(Ex=out)
@@ -73,8 +73,8 @@ pvv = Expression([Term(1, [], [Tensor([b, a], "")], operators, [])])
 PT = commute(pvv, T)
 PTT = commute(PT, T)
 mid = pvv + PT + Fraction('1/2')*PTT
-#full = L*mid*R
-full = L*mid
+full = L*mid*R
+#full = L*mid
 out = apply_wick(full)
 out.resolve()
 final = AExpression(Ex=out)
@@ -89,8 +89,8 @@ poo = Expression([Term(-1, [], [Tensor([j, i], "")], operators, [])])
 PT = commute(poo, T)
 PTT = commute(PT, T)
 mid = poo + PT + Fraction('1/2')*PTT
-#full = L*mid*R
-full = L*mid
+full = L*mid*R
+#full = L*mid
 out = apply_wick(full)
 out.resolve()
 final = AExpression(Ex=out)
@@ -105,8 +105,8 @@ pvo = Expression([Term(1, [], [Tensor([a, i], "")], operators, [])])
 PT = commute(pvo, T)
 PTT = commute(PT, T)
 mid = pvo + PT + Fraction('1/2')*PTT
-#full = (mid + L*mid)*R
-full = (mid + L*mid)
+full = (mid + L*mid)*R
+#full = (mid + L*mid)
 out = apply_wick(full)
 out.resolve()
 final = AExpression(Ex=out)
